@@ -12,7 +12,7 @@ def gen_rg():
     return f'{gen_number(10,99)}.{gen_number(100,999)}.{gen_number(100,999)}-{gen_number(0,10)}'
 
 def gen_cpf():
-    return f'{gen_number(100,999)}-{gen_number(100,999)}-{gen_number(100,999)}/{gen_number(10,99)}'
+    return f'{gen_number(100,999)}.{gen_number(100,999)}.{gen_number(100,999)}-{gen_number(10,99)}'
 
 
 def gen_columns(columns):
