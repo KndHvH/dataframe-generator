@@ -19,11 +19,7 @@ def create_df(n_rows,n_col):
                 data[i] = [gen_names() for _ in range(n_rows)]
             case 'Lastname':
                 data[i] = [gen_lastnames() for _ in range(n_rows)]
-            case 'Phone-Number':
-                data[i] = [gen_phonenumber() for _ in range(n_rows)]
-            case 'RG':
-                data[i] = [gen_rg() for _ in range(n_rows)]
-            case 'CPF':
-                data[i] = [gen_cpf() for _ in range(n_rows)]
+            case 'Custom':
+                data[i] = [gen_custom(columns[i][1],columns[i][2]) for _ in range(n_rows)]
     return data
     
