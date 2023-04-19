@@ -13,5 +13,5 @@ data = create_df(rows,columns)
 df = pd.DataFrame(data)
 st.dataframe(df,use_container_width=True)
 
-df_csv = df.to_csv()
+df_csv = df.to_csv(index=False)
 st.download_button("Download",df_csv,file_name='generated_df.csv')
