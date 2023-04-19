@@ -19,7 +19,13 @@ def create_df(n_rows,n_col):
                 data[i] = [gen_names() for _ in range(n_rows)]
             case 'Lastname':
                 data[i] = [gen_lastnames() for _ in range(n_rows)]
+            case 'Date':
+                data[i] = [gen_date(columns[i][1],columns[i][2]) for _ in range(n_rows)]
+            case 'Time':
+                data[i] = [gen_time() for _ in range(n_rows)]
             case 'Custom':
                 data[i] = [gen_custom(columns[i][1],columns[i][2]) for _ in range(n_rows)]
+            case 'Category':
+                data[i] = [gen_category(columns[i][1]) for _ in range(n_rows)]
     return data
     
