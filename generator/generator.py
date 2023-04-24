@@ -55,6 +55,7 @@ def gen_custom(example, casetype):
             output.append(str(gen_number()))
             continue
 
+
         if re.search('[a-z]', i):
             output.append(match_letter(casetype))
             continue
@@ -156,3 +157,4 @@ def get_config_value(config,column_name,index=1,type='int'):
         
         case 'list':
             return [] if config == None else list(eval(config[column_name][index]))
+
