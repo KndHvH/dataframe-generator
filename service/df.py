@@ -27,5 +27,5 @@ def create_df(n_rows,n_col):
                 data[i] = [gen_custom(columns[i][1],columns[i][2]) for _ in range(n_rows)]
             case 'Category':
                 data[i] = [gen_category(columns[i][1]) for _ in range(n_rows)]
-    return data
+    return data,columns
     
