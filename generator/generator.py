@@ -1,7 +1,10 @@
 import random
 import streamlit as st
+from streamlit_tags import st_tags
 import string
 import re
+import radar
+import datetime
 
 from service.pool import *
 
@@ -23,6 +26,18 @@ def gen_lastnames():
 def gen_letter():
     return random.choice(string.ascii_letters)
 
+def gen_category(list):
+    return random.choice(list)
+
+def gen_date(start,stop):
+    date = radar.random_datetime(start,stop)
+    return date.strftime("%d.%m.%Y")
+
+def gen_time():
+    hour = f'{gen_number(0,3)}{gen_number()}'
+    minute = f'{gen_number(0,6)}{gen_number()}'
+    second = f'{gen_number(0,6)}{gen_number()}'
+    return f"{hour}:{minute}:{second}"
 
 def gen_custom(example, casetype):
     output = []
@@ -39,6 +54,7 @@ def gen_custom(example, casetype):
         if re.search('\d', i):
             output.append(str(gen_number()))
             continue
+
 
         if re.search('[a-z]', i):
             output.append(match_letter(casetype))
@@ -69,40 +85,76 @@ def match_letter(casetype, lower=True):
             return gen_letter()
 
 
-def gen_columns(columns):
+def gen_columns(columns,config):
+    content = config.keys() if config != None else [0 for _ in range(columns)]
+
     with st.expander('Configuracao Colunas', expanded=True):
         data = {}
-        data_types = ['Int', 'Float', 'Name', 'Lastname', 'Custom']
-        col_e1 = None
-        col_e2 = None
-        for i in range(columns):
+        data_types = ['Int', 'Float', 'Name', 'Lastname','Date','Time','Custom','Category']
+        
+
+
+        for i,v in enumerate(content):
+            col_e1 = None 
+            col_e2 = None
             c1, c2, c3, c4 = st.columns(4)
-            with c1:
-                col_name = st.text_input('Column Name', key=i)
-            with c2:
-                col_data_type = st.selectbox(
-                    'Column Type', data_types, key=i+10)
+            with c1: col_name = st.text_input('Column Name', key=i+1000,value=v if config != None else get_letters_list()[i])
+            with c2: col_data_type = st.selectbox('Column Type', data_types, key=i+10000,index=get_preselected_option(config[v][0] if config != None else 'Int'))
 
             match col_data_type:
                 case'Int':
-                    with c3:
-                        col_e1 = st.number_input('Start', step=1, key=i+100)
-                    with c4:
-                        col_e2 = st.number_input(
-                            'Stop', value=10, step=1, key=i+1000)
+                    with c3: col_e1 = st.number_input('Start', step=1, key=i+100000,value=get_config_value(config,v,1,'int'))
+                    with c4: col_e2 = st.number_input('Stop', step=1, key=i+1000000,value=get_config_value(config,v,2,'int'))
                 case'Float':
-                    with c3:
-                        col_e1 = st.number_input('Start', step=0.01, key=i+100)
-                    with c4:
-                        col_e2 = st.number_input(
-                            'Stop', value=10, step=1, key=i+1000)
+                    with c3: col_e1 = st.number_input('Start', step=0.01, key=i+100000,value=get_config_value(config,v,1,'int'))
+                    with c4: col_e2 = st.number_input('Stop', step=0.01, key=i+1000000,value=get_config_value(config,v,2,'int'))
+                case'Date':
+                    with c3: col_e1 = st.date_input('Start',key=i+100000,value=get_config_value(config,v,1,'date'))
+                    with c4: col_e2 = st.date_input('Stop',min_value=col_e1,key=i+1000000,value=get_config_value(config,v,2,'date'))
                 case'Custom':
-                    with c3:
-                        col_e1 = st.text_input('Example', key=i+100)
-                    with c4:
-                        col_e2 = st.selectbox(
-                            'MatchCase', ['Match', 'Lower', 'Upper', 'Random'], key=i+1000)
+                    with c3: col_e1 = st.text_input('Example', key=i+100000,value=get_config_value(config,v,1,'str'))
+                    with c4: col_e2 = st.selectbox('MatchCase', ['Match', 'Lower', 'Upper', 'Random'], key=i+1000000)
+                case'Category':
+                    with c3: col_e1 = st_tags(label='Category Values',text='',key=i+100000,value=get_config_value(config,v,1,'list'))
 
             data[col_name] = [col_data_type, col_e1, col_e2]
-
         return data
+
+
+def get_preselected_option(option):
+
+    match option:
+        case 'Int':
+            return 0
+        case 'Float':
+            return 1
+        case 'Name':
+            return 2
+        case 'Lastname':
+            return 3
+        case 'Date':
+            return 4
+        case 'Time':
+            return 5
+        case 'Custom':
+            return 6
+        case 'Category':
+            return 7  
+        
+def get_config_value(config,column_name,index=1,type='int'):
+    
+    match type:
+        case 'int':
+            if config != None: return int(config[column_name][index])
+            return 0 if index == 1 else 10
+        case 'float':
+            if config != None: return float(config[column_name][index])
+            return 0.0 if index == 1 else 10.0
+        case 'str':
+            return 'Empty' if config == None else config[column_name][index]
+        case 'date':
+            return None if config == None else datetime.datetime.strptime(config[column_name][index], '%Y-%m-%d')
+        
+        case 'list':
+            return [] if config == None else list(eval(config[column_name][index]))
+
