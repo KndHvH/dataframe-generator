@@ -1,7 +1,8 @@
 import streamlit as st
 
+
 def init_session_state():
-    if 'imported_columns' not in st.session_state:
-        st.session_state.imported_columns = None
-    if 'imported' not in st.session_state:
-        st.session_state.imported = False
+    if 'upload_columns' not in st.session_state:
+        st.session_state.upload_columns = None
+    if 'upload' not in st.session_state:
+        st.session_state.upload = False
