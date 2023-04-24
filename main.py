@@ -20,7 +20,7 @@ save_df = pd.DataFrame(gen_columns)
 save_file = save_df.to_csv(index=False)
 
 
-c1, c2, c3, _ = st.columns(4)
+c1, c2, c3 = st.columns(3)
 
 with c1: st.download_button("Download", df_csv, file_name=f'{table_name}.csv', use_container_width=True)
 with c2: st.download_button("Save config", save_file,file_name=f'save_file_{table_name}.csv', use_container_width=True)

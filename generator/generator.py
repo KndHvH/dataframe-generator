@@ -71,14 +71,14 @@ def gen_custom(example, casetype):
 
 def match_letter(casetype, lower=True):
     if casetype == 'Match':
-        casetype = 'Lower' if lower else 'High'
+        casetype = 'Lower' if lower else 'Upper'
 
     match casetype:
 
         case 'Lower':
             return gen_letter().lower()
 
-        case 'High':
+        case 'Upper':
             return gen_letter().upper()
 
         case 'Random':
@@ -97,6 +97,7 @@ def gen_columns(columns,config):
         for i,v in enumerate(content):
             col_e1 = None 
             col_e2 = None
+            _cat = False
             c1, c2, c3, c4 = st.columns(4)
             with c1: col_name = st.text_input('Column Name', key=i+1000,value=v if config != None else get_letters_list()[i])
             with c2: col_data_type = st.selectbox('Column Type', data_types, key=i+10000,index=get_preselected_option(config[v][0] if config != None else 'Int'))
@@ -106,8 +107,8 @@ def gen_columns(columns,config):
                     with c3: col_e1 = st.number_input('Start', step=1, key=i+100000,value=get_config_value(config,v,1,'int'))
                     with c4: col_e2 = st.number_input('Stop', step=1, key=i+1000000,value=get_config_value(config,v,2,'int'))
                 case'Float':
-                    with c3: col_e1 = st.number_input('Start', step=0.01, key=i+100000,value=get_config_value(config,v,1,'int'))
-                    with c4: col_e2 = st.number_input('Stop', step=0.01, key=i+1000000,value=get_config_value(config,v,2,'int'))
+                    with c3: col_e1 = st.number_input('Start', step=0.01, key=i+100000,value=get_config_value(config,v,1,'float'))
+                    with c4: col_e2 = st.number_input('Stop', step=0.01, key=i+1000000,value=get_config_value(config,v,2,'float'))
                 case'Date':
                     with c3: col_e1 = st.date_input('Start',key=i+100000,value=get_config_value(config,v,1,'date'))
                     with c4: col_e2 = st.date_input('Stop',min_value=col_e1,key=i+1000000,value=get_config_value(config,v,2,'date'))
@@ -115,7 +116,8 @@ def gen_columns(columns,config):
                     with c3: col_e1 = st.text_input('Example', key=i+100000,value=get_config_value(config,v,1,'str'))
                     with c4: col_e2 = st.selectbox('MatchCase', ['Match', 'Lower', 'Upper', 'Random'], key=i+1000000)
                 case'Category':
-                    with c3: col_e1 = st_tags(label='Category Values',text='',key=i+100000,value=get_config_value(config,v,1,'list'))
+                    _cat = True
+            if _cat: col_e1 = st_tags(label='Category Values',text='',key=i+100000,value=get_config_value(config,v,1,'list'))
 
             data[col_name] = [col_data_type, col_e1, col_e2]
         return data
@@ -151,10 +153,10 @@ def get_config_value(config,column_name,index=1,type='int'):
             if config != None: return float(config[column_name][index])
             return 0.0 if index == 1 else 10.0
         case 'str':
-            return 'Empty' if config == None else config[column_name][index]
+            return '' if config == None else config[column_name][index]
         case 'date':
             return None if config == None else datetime.datetime.strptime(config[column_name][index], '%Y-%m-%d')
         
         case 'list':
-            return [] if config == None else list(eval(config[column_name][index]))
+            return None if config == None else list(eval(config[column_name][index]))
 
