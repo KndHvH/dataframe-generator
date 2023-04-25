@@ -86,14 +86,16 @@ def match_letter(casetype, lower=True):
 
 
 def gen_columns(columns,config):
-    content = config.keys() if config != None else [0 for _ in range(columns)]
+
+    content = get_content(columns, config)
+
+    st.text(content)
+    st.text(type(content))
 
     with st.expander('Configuracao Colunas', expanded=True):
         data = {}
         data_types = ['Int', 'Float', 'Name', 'Lastname','Date','Time','Custom','Category']
         
-
-
         for i,v in enumerate(content):
             col_e1 = None 
             col_e2 = None
@@ -160,3 +162,14 @@ def get_config_value(config,column_name,index=1,type='int'):
         case 'list':
             return None if config == None else list(eval(config[column_name][index]))
 
+
+
+def get_content(columns, config):
+    if config == None: return [0 for _ in range(columns)]
+    
+    content = list(config.keys())
+    diff = columns - len(content)
+
+    if diff > 0: content.append(0)
+    if diff < 0: content.pop()
+    return content
