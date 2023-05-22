@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+streamlit = "==1.22.0"
+streamlit_tags = "==1.2.8"
+radar = "==0.3"
+
+
+[requires]
+python_version = "3.11"
+
+[pipenv]
+allow_prereleases = true
