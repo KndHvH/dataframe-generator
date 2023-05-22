@@ -89,9 +89,6 @@ def gen_columns(columns,config):
 
     content = get_content(columns, config)
 
-    st.text(content)
-    st.text(type(content))
-
     with st.expander('Configuracao Colunas', expanded=True):
         data = {}
         data_types = ['Int', 'Float', 'Name', 'Lastname','Date','Time','Custom','Category']
