@@ -23,9 +23,9 @@ def main_page():
 
 def main_page_header():
     c1, c2, c3 = st.columns(3)
-    with c1: table_name = st.text_input('Table Name',value='table')
-    with c2: rows = st.number_input('Number Rows', step=1)
-    with c3: columns = st.number_input('Number Columns', step=1,max_value=702, value=len(st.session_state.upload_columns) if st.session_state.upload_columns else 0)
+    with c1: table_name = st.text_input('Table Name',value='TABLE')
+    with c2: columns = st.number_input('Number Columns', step=1,max_value=702, value=len(st.session_state.upload_columns) if st.session_state.upload_columns else 0)
+    with c3: rows = st.number_input('Number Rows', step=1)
 
     return table_name, rows, columns
 
