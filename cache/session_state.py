@@ -6,3 +6,6 @@ def init_session_state():
         st.session_state.upload_columns = None
     if 'upload' not in st.session_state:
         st.session_state.upload = False
+    if 'lgpd' not in st.session_state:
+        st.session_state.lgpd = False
+
