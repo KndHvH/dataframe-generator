@@ -7,13 +7,13 @@ def privacy_page():
         """
         # Política de Privacidade
 
-        Esta Política de Privacidade tem como objetivo informar sobre as práticas de geração, uso e divulgação de dados pessoais pela ferramenta de geração de dados fictícios desenvolvida por Matias Cornelsen Herklotz (doravante denominada "Dataframe Generator").
+        Esta Política de Privacidade tem como objetivo informar sobre as práticas de geração, uso e divulgação de dados pessoais pela ferramenta de geração de dados fictícios, doravante denominada "Dataframe Generator".
 
         ### 1. Geração e Uso de Dados Pessoais
 
         A ferramenta é projetada para gerar dados fictícios para testes em processos de ETL, incluindo informações como CPFs, nomes, endereços, entre outros. Esses dados são gerados de forma aleatória e não são associados a nenhuma pessoa real.
 
-        Ao utilizar a ferramenta, você concorda que os dados pessoais gerados serão coletados e armazenados temporariamente com a finalidade exclusiva de facilitar os testes em processos de ETL. Esses dados não serão utilizados para qualquer outra finalidade além daquelas relacionadas aos testes de ETL.
+        Ao utilizar a ferramenta, você concorda que os dados pessoais gerados poderão ser coletados e armazenados temporariamente com a finalidade exclusiva de facilitar os testes em processos de ETL. Esses dados não serão utilizados para qualquer outra finalidade além daquelas relacionadas aos testes de ETL.
 
         ### 2. Proteção de Dados Pessoais
 
