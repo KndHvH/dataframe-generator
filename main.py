@@ -7,7 +7,7 @@ from content.privacy_page import privacy_page
 init_session_state()
 main_page_cfg()
 
-st.image('pics\hitss.png')
+st.image('./pics/hitss.png')
 
 if st.session_state.lgpd: main_page()
 

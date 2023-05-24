@@ -4,7 +4,7 @@ import pandas as pd
 
 from service.df import create_df
 
-LOGO_PATH = 'pics\hitss2.png'
+LOGO_PATH = './pics/hitss2.png'
 
 
 def main_page():
