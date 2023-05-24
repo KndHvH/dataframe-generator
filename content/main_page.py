@@ -4,6 +4,9 @@ import pandas as pd
 
 from service.df import create_df
 
+LOGO_PATH = 'pics\hitss2.png'
+
+
 def main_page():
 
     table_name, n_rows, n_columns = main_page_header()
@@ -20,8 +23,14 @@ def main_page():
 
     main_page_botton(df_csv,save_file,table_name)
 
+def main_page_cfg():
+    st.set_page_config( page_title = 'Dataframe Generator',
+                    page_icon = LOGO_PATH,
+                    layout='centered')
+
 
 def main_page_header():
+
     c1, c2, c3 = st.columns(3)
     with c1: table_name = st.text_input('Table Name',value='TABLE')
     with c2: columns = st.number_input('Number Columns', step=1,max_value=702, value=len(st.session_state.upload_columns) if st.session_state.upload_columns else 0)
